@@ -6,12 +6,30 @@ console.log(message);
 
 
 class NodeObj{
-    parents: []//list<NodeObj>;
-    children: []//list<NodeObj>;
+    parents: NodeObj[]//list<NodeObj>;
+    children: NodeObj[]//list<NodeObj>;
     title: string;
-    path: []//list<String>;//Or array?
+    path: string[]//list<String>;//Or array?
 
-    constructor(){
+    constructor(parents: NodeObj[], title: string){
+
+        this.parents = parents;
+        this.title = title;
+        this.children = [];
+
+        
+        if (parents.length != 0){
+            this.path = new Array();
+
+            for (var i = 0; i < parents.length; i++){
+                this.path.push(parents[i].title);
+            }
+
+            this.path.push(title);
+        }
+        else{
+            this.path = new Array(title);
+        }
 
     }
 
@@ -21,7 +39,7 @@ class NodeObj{
 
     //TODO implement
     public addChild(child: NodeObj): void{
-
+        this.children.push(child);
     }
 
     //TODO implement
@@ -39,16 +57,9 @@ class NodeObj{
 
     }
 
-    //TODO implement
-    toString(node: NodeObj): string{
-
-        let vars : string = "";
-
-
-
-        return vars;
+    public toString(): string{
+        return this.title + "- PATH:**" + this.path + "**, parent count: " + this.parents.length + ", children count: " + this.children.length;
     }
-
 }
 
 class NodeTree{
@@ -57,7 +68,11 @@ class NodeTree{
     allNodes: Map<string, NodeObj>;//Store access for all nodes
 
     constructor(newRoot: NodeObj){
+        this.allNodes = new Map();
+
+
         this.root = newRoot;
+        this.allNodes[newRoot.title] = newRoot;
     }
 
 
@@ -65,11 +80,11 @@ class NodeTree{
         return this.allNodes.get(title);
     }
 
-    addChild(path: [], newNode: NodeObj ): void{
-        let parentNode: NodeObj = this.allNodes.get(path[path.length - 1]);
+    addChild(newNode: NodeObj ): void{
+        let parentNode: NodeObj = newNode.parents[0];
 
         parentNode.addChild(newNode);
-
+        this.allNodes[newNode.title] = newNode;
     }
 
     deleteChild(nodeToDelete: NodeObj): void{
@@ -100,3 +115,16 @@ class NodeTree{
     */
 
 }
+
+
+let tree: NodeTree = new NodeTree(new NodeObj([],"hello"));
+
+tree.addChild(new NodeObj(new Array(tree.root), "second node"));
+
+console.log(tree.root.toString());
+console.log(tree.allNodes["second node"].toString());
+
+
+
+
+
