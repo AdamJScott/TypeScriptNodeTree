@@ -54,12 +54,17 @@ class NodeObj{
 
     }
 
+    /**
+     * Post order traversal
+     * @param parent 
+     * @returns 
+     */
     public traverseChildren(parent: NodeObj): string{
 
-        var tabHeight = "\t";
+        var tabHeight = "----";
 
         for (var i = 0; i < parent.children.length; i++){
-            console.log(tabHeight.repeat(parent.getHeight())+ "v---> "  + this.traverseChildren(parent.children[i]));
+            console.log("|" + tabHeight.repeat(parent.getHeight())+ "|"  + this.traverseChildren(parent.children[i]));
         }
 
         return parent.title;
@@ -134,24 +139,15 @@ function getRandomIntInclusive(min, max) {
   }
 
 
-let tree: NodeTree = new NodeTree(new NodeObj([],"hello"));
+let tree: NodeTree = new NodeTree(new NodeObj([],"Tree root"));
 
+let amount: Number = 10000;
 
-
-for (var i = 0; i < 4; i++){
-    tree.addChild(new NodeObj(new Array(tree.root), i + " node out of 3(4)"));
-}
-
-for (var i = 10; i < 20; i++){
+for (var i = 0; i < amount; i++){
     let allNodes = [...Object.values(tree.allNodes)];
-    console.log(i + " started........");
-    if (i == 19){
-        console.log(allNodes);
-    }
-
-    tree.addChild(new NodeObj(new Array(allNodes[getRandomIntInclusive(0, allNodes.length - 1)]), i + " random assigned node"));
+    tree.addChild(new NodeObj(new Array(allNodes[getRandomIntInclusive(0, allNodes.length - 1)]), i + " "));
 }
-
+console.log("Completed creation of nodes");
 //console.log(tree.root.toString());
 
 //console.log(tree.allNodes);
