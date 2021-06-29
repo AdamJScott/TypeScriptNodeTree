@@ -101,15 +101,39 @@ class NodeTree{
         this.allNodes[newNode.title] = newNode;
     }
 
-    deleteChild(nodeToDelete: NodeObj): void{
+    addParent(parentNode: String, newChild: String){
 
     }
 
-    addParent(parentNode: NodeObj, newChild: NodeObj){
+    setChild(): void{
 
     }
 
-    deleteParent(nodeToDelete: NodeObj): void{
+    setParent(): void{
+
+    }
+
+    renameNode(): void{
+
+    }
+
+    setValue(): void{
+
+    }
+
+    getValue(): void{
+        //TODO change to any
+    }
+
+    removeNode(nodeToDelete: String): void{
+
+    }
+
+    removeChild(): void{
+
+    }
+
+    removeParent(nodeToDelete: String): void{
 
     }
 
@@ -117,6 +141,10 @@ class NodeTree{
         console.log("Printing tree for: " + tree.root.title);
         return this.root.traverseChildren(this.root);
     }
+
+
+
+
 
     /*
         Need to:
