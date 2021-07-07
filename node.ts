@@ -1,3 +1,21 @@
+//TODO 
+//TODO SUS OUT WAY TO STORE REFERENCES AND TREE REPRESENTATION
+//TODO DELETE CHILD
+//TODO DELETE PARENT
+//TODO DELETE NODE (DESTRUCTIVE)
+//TODO ADD CHILD
+//TODO ADD PARENT
+//TODO SET CHILD
+//TODO SET PARENT
+//TODO RENAME NODE
+//TODO SET VALUE
+//TODO GET VALUE
+//TODO THEN TREE ACCESS REMOVE CHILD, PARENT N THAT
+//TODO maybe figure out different traversals, put in the rules for heights and stuff
+
+
+
+
 class NodeObj{
     parents: NodeObj[]//list<NodeObj>;
     children: NodeObj[]//list<NodeObj>;
