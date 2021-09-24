@@ -1,201 +1,270 @@
-//TODO 
-//TODO SUS OUT WAY TO STORE REFERENCES AND TREE REPRESENTATION
-//TODO DELETE CHILD
-//TODO DELETE PARENT
-//TODO DELETE NODE (DESTRUCTIVE)
-//TODO ADD CHILD
-//TODO ADD PARENT
-//TODO SET CHILD
-//TODO SET PARENT
-//TODO RENAME NODE
-//TODO SET VALUE
-//TODO GET VALUE
-//TODO THEN TREE ACCESS REMOVE CHILD, PARENT N THAT
-//TODO maybe figure out different traversals, put in the rules for heights and stuff
-
-
-
-
-class NodeObj{
-    parents: NodeObj[]//list<NodeObj>;
-    children: NodeObj[]//list<NodeObj>;
-    title: string;
-    path: string[]//list<String>;//Or array?
-
-    constructor(parents: NodeObj[], title: string){
-
-        this.title = title;
-        this.children = [];
-        this.parents = [];
-
-        for (var i = 0; i < parents.length; i++){
-            this.parents.push(parents[i]);
-        }
-
-        
-        if (parents.length != 0){
-            this.path = new Array();
-
-            for (var i = 0; i < parents[0].path.length; i++){
-                this.path.push(parents[0].path[i]);
-            }
-
-            this.path.push(title);
-        }
-        else{
-            this.path = new Array(title);
-        }
-
-    }
-
-    public getHeight(){
-        return this.path.length;
-    }
-
-    //TODO implement
-    public addChild(child: NodeObj): void{
-        this.children.push(child);
-    }
-
-    //TODO implement
-    public deleteChild(child: NodeObj): void{
-
-    }
-
-    //TODO implement
-    public addParent(parent: NodeObj): void{
-
-    }
-
-    //TODO implement
-    public removeParent(parent: NodeObj): void{
-
-    }
-
-    /**
-     * Post order traversal
-     * @param parent 
-     * @returns 
-     */
-    public traverseChildren(parent: NodeObj): string{
-
-        var tabHeight = "----";
-
-        for (var i = 0; i < parent.children.length; i++){
-            console.log("|" + tabHeight.repeat(parent.getHeight())+ "|"  + this.traverseChildren(parent.children[i]));
-        }
-
-        return parent.title;
-    } 
-
-
-    public toString(): string{
-        return this.title + "- PATH:**" + this.path + "**, parent count: " + this.parents.length + ", children count: " + this.children.length;
-    }
-}
-
-class NodeTree{
-
-    root: NodeObj;//Tree representation
-    allNodes: Map<string, NodeObj>;//Store access for all nodes
-
-    constructor(newRoot: NodeObj){
-        this.allNodes = new Map<string, NodeObj>();
-
-
-        this.root = newRoot;
-        this.allNodes[newRoot.title] = newRoot;
-    }
-
-
-    GetNodeByTitle(title: string): NodeObj{
-        return this.allNodes.get(title);
-    }
-
-    addChild(newNode: NodeObj ): void{
-        let parentNode: NodeObj = newNode.parents[0];
-
-        parentNode.addChild(newNode);
-        this.allNodes[newNode.title] = newNode;
-    }
-
-    addParent(parentNode: String, newChild: String){
-
-    }
-
-    setChild(): void{
-
-    }
-
-    setParent(): void{
-
-    }
-
-    renameNode(): void{
-
-    }
-
-    setValue(): void{
-
-    }
-
-    getValue(): void{
-        //TODO change to any
-    }
-
-    removeNode(nodeToDelete: String): void{
-
-    }
-
-    removeChild(): void{
-
-    }
-
-    removeParent(nodeToDelete: String): void{
-
-    }
-
-    treeToString(): string{
-        console.log("Printing tree for: " + tree.root.title);
-        return this.root.traverseChildren(this.root);
-    }
-
-
-
-
-
-    /*
-        Need to:
-            Add method
-            Delete method
-            Search method
-            path follow method
-            Breadth search bottom up post order?
-
-    */
-
-
-}
-
-
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min; // max & min both included 
-  }
-
-
-let tree: NodeTree = new NodeTree(new NodeObj([],"Tree root"));
-
-let amount: Number = 10000;
-
-for (var i = 0; i < amount; i++){
-    let allNodes = [...Object.values(tree.allNodes)];
-    tree.addChild(new NodeObj(new Array(allNodes[getRandomIntInclusive(0, allNodes.length - 1)]), i + " "));
 }
-console.log("Completed creation of nodes");
-//console.log(tree.root.toString());
 
-//console.log(tree.allNodes);
 
-console.log(tree.treeToString());
+class NodeTranslationTemporaryObject
+{
+    parentNode?: NodeObject;
+    identificationNumber: number = -1;
+    title?: string;
+
+    isObjectNodeReady()
+    {
+        if (this.identificationNumber === -1)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    
+    attemptConversionToNodeObject()
+    {
+        if (this.isObjectNodeReady())
+        {
+            return this.convertToNodeObject();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    convertToNodeObject()
+    {
+        return new NodeObject(this.identificationNumber, this.title, this.parentNode);
+    }
+}
+
+class NodeObject
+{
+    parentNode?: NodeObject;
+    children: NodeObject[];
+    
+    familyHierarchyPath: number[]; //Uses the ID numbers
+    identificationNumber: number;
+    title?: string;
+
+    xPosition?: number;
+    yPosition?: number;
+
+    constructor(identificationNumber: number, title?: string, parentNode?: NodeObject)
+    {
+        this.identificationNumber = identificationNumber;
+        if (title)
+        {
+            this.title = title;
+        }
+
+        if (parentNode)
+        {
+            this.parentNode = parentNode;
+        }
+
+        this.children = [];
+        this.buildFamilyHierarchy();
+    }
+
+    getParentNode(){
+        return this.parentNode;
+    }
+
+    getChildren(){
+        return this.children;
+    }
+
+    getFamilyHierarchyPath(){
+        return this.familyHierarchyPath;
+    }
+
+    getIdentificationNumber(){
+        return this.identificationNumber;
+    }
+
+    getTitle(){
+        return this.title;
+    }
+
+    getXPosition(){
+        return this.xPosition;
+    }
+
+    getYPosition(){
+        return this.yPosition;
+    }
+
+    setParentNode(parent: NodeObject)
+    {
+        this.parentNode = parent;
+    }
+
+    setChildren(children: NodeObject[])
+    {
+        this.children = children;
+    }
+
+    setFamilyHierarchyPath(path: number[])
+    {
+        this.familyHierarchyPath = path;
+    }
+
+    setIdentificationNumber(identificationNumber: number)
+    {
+        this.identificationNumber = identificationNumber;
+    }
+
+    setTitle(title: string)
+    {
+        this.title = title;
+    }
+
+    setPosition(xPosition: number, yPosition: number)
+    {
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+    }
+
+    buildFamilyHierarchy()
+    {
+        let nodeToCheck: NodeObject = this.parentNode;
+        let newPath: number [] = [];
+
+        while (nodeToCheck != null)
+        {
+            newPath.push(nodeToCheck.getIdentificationNumber());
+            nodeToCheck = nodeToCheck.getParentNode();
+        }
+
+        if (newPath.length > 0)
+        {
+            //Ensures that the first element is it's oldest ancestor
+            if (newPath[0] !== this.parentNode.identificationNumber)
+            {
+                newPath.reverse();
+            }
+        }
+
+        this.setFamilyHierarchyPath(newPath);
+    }
+
+    addChild(child: NodeObject)
+    {
+        this.children.push(child);
+        child.setParentNode(this);
+        child.buildFamilyHierarchy();
+    }
+
+    //! Untested
+    removeChild(child: NodeObject)
+    {
+        this.children.splice(this.children.indexOf(child) , 1);
+    }
+
+    returnNodeLevel()
+    {
+        this.buildFamilyHierarchy();
+        return this.familyHierarchyPath.length;
+    }
+}
+
+class TreeRepresentationOfGraph
+{
+    rootNode: NodeObject;
+    allNodes: Map<number, NodeObject> = new Map<number,NodeObject>();
+    deepestLevel: number = 0;
+
+    constructor(rootNode?: NodeObject)
+    {
+
+        if (rootNode)
+        {
+            this.rootNode = rootNode;
+            this.allNodes.set(rootNode.getIdentificationNumber(), rootNode);
+            this.deepestLevel = 1;
+        }
+
+        console.log("Creating tree");
+    }
+
+    setRootNode(rootNode: NodeObject)
+    {
+        this.rootNode = rootNode;
+    }
+
+    addChildToNode(parentNode: NodeObject, childNode: NodeObject)
+    {
+        parentNode.addChild(childNode);
+        this.allNodes.set(childNode.getIdentificationNumber(), childNode);
+        
+        if (parentNode.returnNodeLevel() + 1 > this.deepestLevel)
+        {
+            this.deepestLevel = parentNode.returnNodeLevel() + 1;
+        }
+
+    }
+
+    addChildToNodeParentID(parentNode: number, childNode: NodeObject)
+    {
+        this.allNodes.get(parentNode).addChild(childNode);
+        this.allNodes.set(childNode.getIdentificationNumber(), childNode);
+
+        if (this.allNodes.get(parentNode).returnNodeLevel() + 1 > this.deepestLevel)
+        {
+            this.deepestLevel = this.allNodes.get(parentNode).returnNodeLevel() + 1;
+        }
+    }
+
+    buildTreeCoordinates()
+    {
+
+        let levels: NodeObject[][] = [];
+
+        console.log("deepestLevel: " + this.deepestLevel);
+
+        for(let i = 0; i <= this.deepestLevel; i++)
+        {
+            levels.push([]);
+        }
+
+        this.allNodes.forEach((node, idNumber) => {
+
+            levels[node.returnNodeLevel()].push(node);            
+        });
+
+        let levelWithHighestLength = 0;
+
+        for (let i = 0; i < levels.length; i++)
+        {
+            if (levels[levelWithHighestLength].length < levels[i].length)
+            {
+                levelWithHighestLength = i;
+            }
+
+
+            console.log("Level: " + i + " with: " + levels[i].length + " nodes");
+        }
+        
+        console.log("Level with the highest length: " + levelWithHighestLength);
+        console.log("With: " + levels[levelWithHighestLength].length);
+    }
+}
+
+
+let rootNode = new NodeObject(0, "Root");
+let treeTest = new TreeRepresentationOfGraph(rootNode);
+
+let numberOfNodesToCreate = 1000000;
+
+for (let i = 1; i < numberOfNodesToCreate; i++)
+{
+    treeTest.addChildToNodeParentID(getRandomIntInclusive(0, i - 1), new NodeObject(i, "Node " + i));
+
+}
+
+
+treeTest.buildTreeCoordinates();
