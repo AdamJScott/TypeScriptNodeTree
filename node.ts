@@ -219,7 +219,7 @@ class TreeRepresentationOfGraph
         }
     }
 
-    buildTreeCoordinates()
+    buildTreeCoordinates(nodeWidth: number, nodeHeight: number,marginHorizontal: number, marginVertical: number)
     {
 
         let levels: NodeObject[][] = [];
@@ -251,6 +251,16 @@ class TreeRepresentationOfGraph
         
         console.log("Level with the highest length: " + levelWithHighestLength);
         console.log("With: " + levels[levelWithHighestLength].length);
+
+
+        for (let i = 0; i < levels.length; i++)
+        {
+            for (let j = 0; j < levels[i].length; j++)
+            {
+                this.allNodes.get(levels[i][j].getIdentificationNumber()).setPosition(((marginHorizontal + nodeWidth) * j), (i * (nodeHeight + marginVertical)) );
+            }
+        }
+
     }
 }
 
@@ -258,7 +268,7 @@ class TreeRepresentationOfGraph
 let rootNode = new NodeObject(0, "Root");
 let treeTest = new TreeRepresentationOfGraph(rootNode);
 
-let numberOfNodesToCreate = 1000000;
+let numberOfNodesToCreate = 10;
 
 for (let i = 1; i < numberOfNodesToCreate; i++)
 {
@@ -267,4 +277,5 @@ for (let i = 1; i < numberOfNodesToCreate; i++)
 }
 
 
-treeTest.buildTreeCoordinates();
+treeTest.buildTreeCoordinates(10,10,10,10);
+console.log(treeTest.allNodes);
