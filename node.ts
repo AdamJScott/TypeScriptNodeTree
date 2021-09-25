@@ -221,7 +221,6 @@ class TreeRepresentationOfGraph
 
     buildTreeCoordinates(nodeWidth: number, nodeHeight: number,marginHorizontal: number, marginVertical: number)
     {
-
         let levels: NodeObject[][] = [];
 
         console.log("deepestLevel: " + this.deepestLevel);
@@ -268,14 +267,13 @@ class TreeRepresentationOfGraph
 let rootNode = new NodeObject(0, "Root");
 let treeTest = new TreeRepresentationOfGraph(rootNode);
 
-let numberOfNodesToCreate = 10;
+let numberOfNodesToCreate = 100;
 
 for (let i = 1; i < numberOfNodesToCreate; i++)
 {
     treeTest.addChildToNodeParentID(getRandomIntInclusive(0, i - 1), new NodeObject(i, "Node " + i));
-
 }
 
 
 treeTest.buildTreeCoordinates(10,10,10,10);
-console.log(treeTest.allNodes);
+console.log(treeTest.rootNode);
